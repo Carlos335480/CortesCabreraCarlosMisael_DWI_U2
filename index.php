@@ -7,7 +7,8 @@
     <link rel = "stylesheet" href = "assets/css/estilos.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@500&family=Open+Sans:wght@400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script> 
+  </head>
 <body>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -65,11 +66,9 @@
             <i class = "fa-solid fa-key"></i>
           </div>
           <br><br>
-          <div class="input-icon">
-            <img src="../captcha.php" alt="Captcha" 
-                style="margin-bottom:10px; border:2px solid #fff; border-radius:5px; width:100%;">
-            <input type="text" name="captcha" placeholder="Escribe el texto de la imagen" required>
-            <i class="fas fa-shield-alt"></i>
+          <div class="input-icon" style="display: flex; justify-content: center; margin-bottom: 15px;">
+            
+            <div class="g-recaptcha" data-sitekey="Tu clave publica de captcha"></div>
           </div>
 
           <button type = "submit" formaction = "controllers/inicio_sesión_user.php">Iniciar Sesión</button>
