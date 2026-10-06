@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    $secret_key = 'Tu clave secreta de captcha'; 
+    $secret_key = getenv('RECAPTCHA_SECRET_KEY');
 
     $url = 'https://www.google.com/recaptcha/api/siteverify';
     $data = [

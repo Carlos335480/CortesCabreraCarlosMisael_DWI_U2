@@ -68,13 +68,12 @@
           <br><br>
           <div class="input-icon" style="display: flex; justify-content: center; margin-bottom: 15px;">
             
-            <div class="g-recaptcha" data-sitekey="Tu clave publica de captcha"></div>
+            <div class="g-recaptcha" data-sitekey="<?php echo getenv('RECAPTCHA_SITE_KEY'); ?>"></div>
           </div>
 
           <button type = "submit" formaction = "controllers/inicio_sesión_user.php">Iniciar Sesión</button>
           <p class = "texto-extra">¿No tienes cuenta?&nbsp;<a href = "Registro.php" class = "link-login">Crea una</a></p>
-          <p class="texto-extra">¿Olvidaste tu contraseña?&nbsp;<a href="recuperar.php" class="link-login">Recupérala aquí</a>
-</p>
+          <p class="texto-extra">¿Olvidaste tu contraseña?&nbsp;<a href="recuperar.php" class="link-login">Recupérala aquí</a></p>
 
         </div>
       </form>
