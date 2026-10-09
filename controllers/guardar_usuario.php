@@ -2,10 +2,40 @@
 session_start();
 require_once __DIR__ . "/../config/conexion.php";
 
-if (!isset($_POST['captcha']) || strtolower ($_POST['captcha']) !== strtolower ($_SESSION['captcha_text'])){
-    header("Location: ../registro.php?error=Captcha incorrecto");
-    exit();
-}
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $recaptcha_response = $_POST['g-recaptcha-response'] ?? '';
+
+    if (empty($recaptcha_response)) {
+        header("Location: ../registro.php?error=" . urlencode("Por favor, confirma que no eres un robot"));
+        exit();
+    }
+
+    $secret_key = getenv('RECAPTCHA_SECRET_KEY') ?: ($_ENV['RECAPTCHA_SECRET_KEY'] ?? $_SERVER['RECAPTCHA_SECRET_KEY'] ?? '');
+
+    $url  = 'https://www.google.com/recaptcha/api/siteverify';
+    $data = [
+        'secret'   => $secret_key,
+        'response' => $recaptcha_response,
+        'remoteip' => $_SERVER['REMOTE_ADDR']
+    ];
+
+    $options = [
+        'http' => [
+            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+            'method'  => 'POST',
+            'content' => http_build_query($data)
+        ]
+    ];
+
+    $context = stream_context_create($options);
+    $verify  = file_get_contents($url, false, $context);
+    $captcha_success = json_decode($verify, true);
+
+    if (!$captcha_success['success']) {
+        header("Location: ../registro.php?error=" . urlencode("Verificación de reCAPTCHA fallida. Inténtalo de nuevo."));
+        exit();
+    }
 
 $nameuser = trim($_POST['nameuser']);
 $name = trim($_POST['name']);
@@ -51,5 +81,6 @@ if ($camposVacios > 1) {
         exit();
     }
 
+}
 }
 ?>

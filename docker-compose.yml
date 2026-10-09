@@ -12,6 +12,8 @@ services:
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${SA_PASSWORD}
       DB_NAME: ${DB_NAME}
+      RECAPTCHA_SITE_KEY: ${RECAPTCHA_SITE_KEY}
+      RECAPTCHA_SECRET_KEY: ${RECAPTCHA_SECRET_KEY}
 
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -20,7 +22,7 @@ services:
       ACCEPT_EULA: "Y"
     ports:
       - "1433:1433"
-    volumes:
+    volumes:  
       - sql_data:/var/opt/mssql
 volumes:
   sql_data:
